@@ -39,14 +39,26 @@ public class JpaMain {
              * em.remove(findMember);
              */
 
+            /** member 전체 조회
+             * List<Member> result = em.createQuery("select m from Member as m", Member.class)
+             *         .getResultList();
+             * for (Member member : result) {
+             *     System.out.println("member.getName() = " + member.getName());
+             * }
+             */
 
-            List<Member> result = em.createQuery("select m from Member as m", Member.class)
-                    .getResultList();
+            /** 같은 트랜잭션 안 동일성 보장
+             * Member findMember1 = em.find(Member.class, 100L);
+             * Member findMember2 = em.find(Member.class, 100L);
+             * System.out.println("result: "+(findMember1 == findMember2));
+             */
 
-            for (Member member : result) {
-                System.out.println("member.getName() = " + member.getName());
-            }
+            //영속상태
+            Member member = em.find(Member.class, 1L);
+            member.setName("AAA"); //이름 변경
 
+            //준영속 상태- JPA에서 관리X
+            em.detach(member);
 
             tx.commit();
         } catch (Exception e){
