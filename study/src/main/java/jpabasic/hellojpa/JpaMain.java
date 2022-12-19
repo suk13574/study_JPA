@@ -53,12 +53,12 @@ public class JpaMain {
              * System.out.println("result: "+(findMember1 == findMember2));
              */
 
-            //영속상태
-            Member member = em.find(Member.class, 1L);
-            member.setName("AAA"); //이름 변경
-
-            //준영속 상태- JPA에서 관리X
-            em.detach(member);
+//            //영속상태
+//            Member member = em.find(Member.class, 1L);
+//            member.setName("AAA"); //이름 변경
+//
+//            //준영속 상태- JPA에서 관리X
+//            em.detach(member);
 
             tx.commit();
         } catch (Exception e){
