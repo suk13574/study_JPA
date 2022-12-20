@@ -5,7 +5,10 @@
     <!--  EntityManagerFactory 생성 시 사용되는 persistence name -->
     <persistence-unit name="hello">
 
-        <class>jpabasic.hellojpa.MemberTest</class>
+        <class>jpabasic.study.domain.Item</class>
+        <class>jpabasic.study.domain.Member</class>
+        <class>jpabasic.study.domain.Order</class>
+        <class>jpabasic.study.domain.OrderItem</class>
 
         <properties>
             <!-- 필수 속성 -->
