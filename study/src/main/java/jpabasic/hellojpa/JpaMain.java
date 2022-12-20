@@ -24,12 +24,11 @@ public class JpaMain {
             //member 저장
             MemberTest member = new MemberTest();
             member.setUsername("member1");
-            member.setTeamId(team.getId());
+            member.setTeam(team);
             em.persist(member);
 
             MemberTest findMember = em.find(MemberTest.class, member.getId());
-            Long findTeamId = findMember.getTeamId();
-            Team findTeam = em.find(Team.class, findTeamId);
+            Team findTeam = findMember.getTeam();
 
 
             tx.commit();
