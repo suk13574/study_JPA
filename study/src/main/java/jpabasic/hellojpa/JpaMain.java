@@ -4,7 +4,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
-import java.util.List;
 
 public class JpaMain {
 
@@ -59,6 +58,9 @@ public class JpaMain {
 //
 //            //준영속 상태- JPA에서 관리X
 //            em.detach(member);
+
+            MemberTest member = new MemberTest();
+            em.persist(member);
 
             tx.commit();
         } catch (Exception e){
