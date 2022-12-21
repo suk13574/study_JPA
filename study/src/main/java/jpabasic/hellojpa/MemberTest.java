@@ -20,7 +20,13 @@ public class MemberTest {
     @JoinColumn(name = "TEAM_ID")
     private Team team;
 
-//    @Column(name = "name")
+    public void changeTeam(Team team) {
+        this.team = team;
+
+        team.getMembers().add(this);
+    }
+
+    //    @Column(name = "name")
 //    private String username;
 //
 //    private Integer age;
