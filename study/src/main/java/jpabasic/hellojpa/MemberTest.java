@@ -17,29 +17,16 @@ public class MemberTest {
     private String username;
 
     @ManyToOne
-    @JoinColumn(name = "TEAM_ID")
+    @JoinColumn(name = "TEAM_ID", insertable = false, updatable = false)
     private Team team;
 
-    public void changeTeam(Team team) {
-        this.team = team;
-
-        team.getMembers().add(this);
-    }
-
-    //    @Column(name = "name")
-//    private String username;
+//    @ManyToOne
+//    @JoinColumn(name = "TEAM_ID")
+//    private Team team;
 //
-//    private Integer age;
+//    public void changeTeam(Team team) {
+//        this.team = team;
 //
-//    @Enumerated(EnumType.STRING)
-//    private RoleType roleType;
-//
-//    @Temporal(TemporalType.TIMESTAMP)
-//    private Date createdDate;
-//
-//    @Temporal(TemporalType.TIMESTAMP)
-//    private Date lastModifiedDate;
-//
-//    @Lob
-//    private String description;
+//        team.getMembers().add(this);
+//    }
 }
