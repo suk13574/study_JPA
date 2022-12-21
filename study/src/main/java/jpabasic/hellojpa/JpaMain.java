@@ -18,17 +18,6 @@ public class JpaMain {
 
         try{
 
-            MemberTest member = new MemberTest();
-            member.setUsername("member1");
-
-            em.persist(member);
-
-            Team team = new Team();
-            team.setName("teamA");
-            team.getMembers().add(member);
-
-            em.persist(team);
-
             tx.commit();
         } catch (Exception e){
             tx.rollback();
