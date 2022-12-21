@@ -11,6 +11,7 @@
 <!--        <class>jpabasic.study.domain.OrderItem</class>-->
         <class>jpabasic.hellojpa.MemberTest</class>
         <class>jpabasic.hellojpa.Team</class>
+        <class>jpabasic.hellojpa.Locker</class>
 
 
         <properties>
