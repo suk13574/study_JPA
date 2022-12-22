@@ -18,6 +18,21 @@ public class JpaMain {
 
         try{
 
+            MovieTest movie = new MovieTest();
+            movie.setDirector("감독A");
+            movie.setActor("홍길동");
+            movie.setName("영화A");
+            movie.setPrice(10000);
+
+            em.persist(movie);
+
+            em.flush();
+            em.clear();
+
+            MovieTest fineMovie = em.find(MovieTest.class, movie.getId());
+            System.out.println("fineMovie = " + fineMovie);
+
+
             tx.commit();
         } catch (Exception e){
             tx.rollback();

@@ -6,18 +6,22 @@
     <persistence-unit name="hello">
 
         <!-- 실전예제 -->
-        <class>jpabasic.study.domain.Item</class>
-        <class>jpabasic.study.domain.Member</class>
-        <class>jpabasic.study.domain.Order</class>
-        <class>jpabasic.study.domain.OrderItem</class>
-        <class>jpabasic.study.domain.Delivery</class>
-        <class>jpabasic.study.domain.Category</class>
+<!--        <class>jpabasic.study.domain.Item</class>-->
+<!--        <class>jpabasic.study.domain.Member</class>-->
+<!--        <class>jpabasic.study.domain.Order</class>-->
+<!--        <class>jpabasic.study.domain.OrderItem</class>-->
+<!--        <class>jpabasic.study.domain.Delivery</class>-->
+<!--        <class>jpabasic.study.domain.Category</class>-->
 
         <!-- 공부 예제 -->
 <!--        <class>jpabasic.hellojpa.MemberTest</class>-->
 <!--        <class>jpabasic.hellojpa.Team</class>-->
 <!--        <class>jpabasic.hellojpa.Locker</class>-->
 <!--        <class>jpabasic.hellojpa.Product</class>-->
+        <class>jpabasic.hellojpa.ItemTest</class>
+        <class>jpabasic.hellojpa.AlbumTest</class>
+        <class>jpabasic.hellojpa.BookTest</class>
+        <class>jpabasic.hellojpa.MovieTest</class>
 
 
         <properties>
