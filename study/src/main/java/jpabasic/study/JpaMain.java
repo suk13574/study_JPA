@@ -1,5 +1,6 @@
 package jpabasic.study;
 
+import jpabasic.study.domain.Book;
 import jpabasic.study.domain.Member;
 import jpabasic.study.domain.Order;
 import org.aspectj.apache.bcel.classfile.ExceptionTable;
@@ -20,6 +21,12 @@ public class JpaMain {
         tx.begin();
 
         try{
+
+            Book book = new Book();
+            book.setName("JPA");
+            book.setAuthor("김영한");
+
+            em.persist(book);
 
             tx.commit();
         } catch(Exception e){
