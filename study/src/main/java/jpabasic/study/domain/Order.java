@@ -11,7 +11,7 @@ import java.util.List;
 @Entity
 @Table(name = "ORDERS") //DB마다 ORDER가 예약어로 걸려있을 수 있음
 @Getter @Setter
-public class Order {
+public class Order extends BaseEntity{
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ORDER_ID")

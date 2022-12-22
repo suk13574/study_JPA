@@ -5,7 +5,7 @@ import org.springframework.data.annotation.ReadOnlyProperty;
 import javax.persistence.*;
 
 @Entity
-public class Delivery {
+public class Delivery extends BaseEntity{
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
