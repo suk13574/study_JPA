@@ -17,15 +17,17 @@
 <!--        <class>jpabasic.study.domain.Book</class>-->
 
         <!-- 공부 예제 -->
-        <class>jpabasic.hellojpa.MemberTest</class>
+<!--        <class>jpabasic.hellojpa.MemberTest</class>-->
 <!--        <class>jpabasic.hellojpa.BaseEntity</class>-->
-        <class>jpabasic.hellojpa.Team</class>
+<!--        <class>jpabasic.hellojpa.Team</class>-->
 <!--        <class>jpabasic.hellojpa.Locker</class>-->
 <!--        <class>jpabasic.hellojpa.Product</class>-->
 <!--        <class>jpabasic.hellojpa.ItemTest</class>-->
 <!--        <class>jpabasic.hellojpa.AlbumTest</class>-->
 <!--        <class>jpabasic.hellojpa.BookTest</class>-->
 <!--        <class>jpabasic.hellojpa.MovieTest</class>-->
+        <class>jpabasic.hellojpa.Parent</class>
+        <class>jpabasic.hellojpa.Child</class>
 
 
         <properties>
