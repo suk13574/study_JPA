@@ -20,20 +20,23 @@ public class JpaMain {
 
         try{
 
+            Team team = new Team();
+            team.setName("team1");
+            em.persist(team);
+
             MemberTest member1 = new MemberTest();
             member1.setUsername("member1");
+            member1.setTeam(team);
             em.persist(member1);
 
             em.flush();
             em.clear();
 
-            MemberTest ref1 = em.getReference(MemberTest.class, member1.getId());
-            System.out.println("ref1.getClass() = " + ref1.getClass());
+            MemberTest m = em.find(MemberTest.class, member1.getId());
+            System.out.println("m = " + m.getTeam().getClass());
 
-            Hibernate.initialize(ref1);
-
-            System.out.println("isLoaded = " + emf.getPersistenceUnitUtil().isLoaded(ref1));
-
+            System.out.println("==============");
+            m.getTeam().getName();
 
             tx.commit();
         } catch (Exception e){
