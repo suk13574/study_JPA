@@ -13,7 +13,7 @@ public class Category extends BaseEntity{
     private String name;
 
     //자식 입장에서 부모 하나 -> ManyToOne
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "PARENT_ID")
     private Category parent;
 
