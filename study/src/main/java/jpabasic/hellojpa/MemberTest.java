@@ -19,15 +19,10 @@ public class MemberTest {
     @Column(name = "USERNAME")
     private String username;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "TEAM_ID")
-    private Team team;
+    private LocalDateTime startDate;
+    private LocalDateTime endDate;
 
-//
-//    @OneToOne
-//    @JoinColumn(name = "LOCKER_ID")
-//    private Locker locker;
-//
-//    @OneToMany(mappedBy = "member")
-//    private List<MemberProduct> memberProducts = new ArrayList<>();
+    private String city;
+    private String street;
+    private String zipcode;
 }
