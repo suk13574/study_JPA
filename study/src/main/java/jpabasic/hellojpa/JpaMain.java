@@ -20,6 +20,12 @@ public class JpaMain {
 
         try{
 
+            MemberTest member = new MemberTest();
+            member.setUsername("hello");
+            member.setHomeAddress(new Address("city", "street", "10"));
+            member.setWorkPeriod(new Period());
+
+            em.persist(member);
 
             tx.commit();
         } catch (Exception e){

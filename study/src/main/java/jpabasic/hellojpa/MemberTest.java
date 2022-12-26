@@ -19,10 +19,11 @@ public class MemberTest {
     @Column(name = "USERNAME")
     private String username;
 
-    private LocalDateTime startDate;
-    private LocalDateTime endDate;
+    //기간 Period
+    @Embedded
+    private Period workPeriod;
 
-    private String city;
-    private String street;
-    private String zipcode;
+    //주소 Address
+    @Embedded
+    private Address homeAddress;
 }
