@@ -1,5 +1,6 @@
 package jpabasic.study.domain;
 
+import jpabasic.hellojpa.Address;
 import org.springframework.data.annotation.ReadOnlyProperty;
 
 import javax.persistence.*;
@@ -10,9 +11,8 @@ public class Delivery extends BaseEntity{
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String city;
-    private String street;
-    private String zipcode;
+    @Embedded
+    private Address address;
 
     private DeliveryStatus status;
 

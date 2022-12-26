@@ -1,5 +1,6 @@
 package jpabasic.study.domain;
 
+import jpabasic.hellojpa.Address;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,11 +17,8 @@ public class Member extends BaseEntity {
 
     private String name;
 
-    private String city;
-
-    private String street;
-
-    private String zipcode;
+    @Embedded
+    private Address address;
 
     @OneToMany(mappedBy = "member")
     private List<Order> orders = new ArrayList<>();
