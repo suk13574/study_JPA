@@ -1,12 +1,9 @@
 package jpabasic.hellojpa;
 
-import jpabasic.study.domain.Member;
-import org.hibernate.Hibernate;
-import org.hibernate.jpa.internal.PersistenceUnitUtilImpl;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 
 public class JpaMain {
 
@@ -20,16 +17,33 @@ public class JpaMain {
 
         try{
 
-            Address address = new Address("city", "street", "10");
+            MemberTest member = new MemberTest();
+            member.setUsername("member1");
+            member.setHomeAddress(new Address("homeCity", "street", "10000"));
 
-            MemberTest member1 = new MemberTest();
-            member1.setUsername("member1");
-            member1.setHomeAddress(address);
-            em.persist(member1);
+            //값 타입 컬렉션 저장
+            member.getFavoriteFoods().add("치킨");
+            member.getFavoriteFoods().add("족발");
+            member.getFavoriteFoods().add("피자");
 
-            Address newAddress = new Address("city2", address.getStreet(), address.getZipcode());
-            member1.setHomeAddress(newAddress);
+            member.getAddressHistory().add(new Address("old1", "street", "10000"));
+            member.getAddressHistory().add(new Address("old2", "street", "10000"));
 
+            em.persist(member);
+            
+            em.flush();
+            em.clear();
+
+            MemberTest findMember = em.find(MemberTest.class, member.getId());
+            List<Address> addressHistory = findMember.getAddressHistory();
+            for (Address address : addressHistory) {
+                System.out.println("address = " + address.getCity());
+            }
+
+            Set<String> favoriteFoods = findMember.getFavoriteFoods();
+            for (String favoriteFood : favoriteFoods) {
+                System.out.println("favoriteFood = " + favoriteFood);
+            }
 
             tx.commit();
         } catch (Exception e){
