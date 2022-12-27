@@ -3,7 +3,6 @@ package jpabasic.hellojpa;
 
 import javax.persistence.*;
 import java.util.List;
-import java.util.Set;
 
 public class JpaMain {
 
@@ -17,38 +16,35 @@ public class JpaMain {
 
         try{
 
-            MemberTest member = new MemberTest();
-            member.setUsername("member1");
-            member.setHomeAddress(new Address("homeCity", "street", "10000"));
 
-            //값 타입 컬렉션 저장
-            member.getFavoriteFoods().add("치킨");
-            member.getFavoriteFoods().add("족발");
-            member.getFavoriteFoods().add("피자");
+            /** JPQL
+             *
+             * List<MemberTest> result = em.createQuery(
+             *          "select m From MemberTest m where m.username like '%kim%'",
+             *          MemberTest.class
+             *  ).getResultList();
+             *
+             */
 
-            member.getAddressHistory().add(new Address("old1", "street", "10000"));
-            member.getAddressHistory().add(new Address("old2", "street", "10000"));
+            /** Criteria
+             *
+             *     //Criteria 사용 준비
+             *     CriteriaBuilder cb = em.getCriteriaBuilder();
+             *     CriteriaQuery<MemberTest> query = cb.createQuery(MemberTest.class);
+             *
+             *     Root<MemberTest> m = query.from(MemberTest.class);
+             *
+             *     CriteriaQuery<MemberTest> cq = query.select(m).where(cb.equal(m.get("username"), "kim"));
+             *     List<MemberTest> resultList = em.createQuery(cq).getResultList();
+             *
+             */
 
-            em.persist(member);
-            
-            em.flush();
-            em.clear();
-
-            MemberTest findMember = em.find(MemberTest.class, member.getId());
-
-            //homeCity -> newCity
-            Address oldAddress = findMember.getHomeAddress();
-            findMember.setHomeAddress(new Address("newCity", oldAddress.getStreet(), oldAddress.getZipcode()));
-            findMember.getAddressHistory().add(oldAddress);
-
-            //치킨 -> 한식
-            findMember.getFavoriteFoods().remove("치킨");
-            findMember.getFavoriteFoods().add("한식");
-
-            //old1 -> new1
-            findMember.getAddressHistory().remove(new Address("old1", "street", "10000"));
-            findMember.getAddressHistory().add(new Address("new1", "street", "10000"));
-
+            /** Native Query
+             *
+             * em.createNativeQuery("select * from MemberTest", MemberTest.class)
+             *          .getResultList();
+             *
+             */
 
             tx.commit();
         } catch (Exception e){
