@@ -12,9 +12,7 @@ import java.util.List;
 public class Team {
 
      @Id @GeneratedValue
-     @Column(name = "TEAM_ID")
      private Long id;
-
      private String name;
 
      @OneToMany(mappedBy = "team")

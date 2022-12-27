@@ -16,35 +16,18 @@ public class JpaMain {
 
         try{
 
+            MemberTest member = new MemberTest();
+            member.setUsername("member1");
+            member.setAge(10);
+            em.persist(member);
 
-            /** JPQL
-             *
-             * List<MemberTest> result = em.createQuery(
-             *          "select m From MemberTest m where m.username like '%kim%'",
-             *          MemberTest.class
-             *  ).getResultList();
-             *
-             */
+            MemberTest singleResult = em.createQuery("select m from MemberTest m where m.username = :username", MemberTest.class)
+                    .setParameter("username", "member1")
+                    .getSingleResult();
+            System.out.println("singleResult = " + singleResult.getUsername());
 
-            /** Criteria
-             *
-             *     //Criteria 사용 준비
-             *     CriteriaBuilder cb = em.getCriteriaBuilder();
-             *     CriteriaQuery<MemberTest> query = cb.createQuery(MemberTest.class);
-             *
-             *     Root<MemberTest> m = query.from(MemberTest.class);
-             *
-             *     CriteriaQuery<MemberTest> cq = query.select(m).where(cb.equal(m.get("username"), "kim"));
-             *     List<MemberTest> resultList = em.createQuery(cq).getResultList();
-             *
-             */
-
-            /** Native Query
-             *
-             * em.createNativeQuery("select * from MemberTest", MemberTest.class)
-             *          .getResultList();
-             *
-             */
+//            TypedQuery<String> query2 = em.createQuery("select m.username from MemberTest m", String.class);
+//            Query query3 = em.createQuery("select m.username, m.age from MemberTest m");
 
             tx.commit();
         } catch (Exception e){

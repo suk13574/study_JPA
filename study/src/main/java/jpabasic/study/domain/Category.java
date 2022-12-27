@@ -22,7 +22,7 @@ public class Category extends BaseEntity{
     private List<Category> child = new ArrayList<>();
 
     @ManyToMany
-    @JoinTable(name = "CATEGORT_ITEM",
+    @JoinTable(name = "CATEGORY_ITEM",
             joinColumns = @JoinColumn(name = "CATEGORY_ID"),
             inverseJoinColumns = @JoinColumn(name = "ITEM_ID")
     )
