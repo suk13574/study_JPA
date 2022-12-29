@@ -19,4 +19,13 @@ public class MemberTest {
     @ManyToOne
     @JoinColumn(name = "TEAM_ID")
     private Team team;
+
+    @Override
+    public String toString() {
+        return "MemberTest{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", age=" + age +
+                '}';
+    }
 }

@@ -18,21 +18,25 @@ public class JpaMain {
 
         try{
 
-            MemberTest member = new MemberTest();
-            member.setUsername("member1");
-            member.setAge(10);
-            em.persist(member);
+            for(int i = 0 ;i < 100 ; i++){
+                MemberTest member = new MemberTest();
+                member.setUsername("member" + i);
+                member.setAge(i);
+                em.persist(member);
+            }
 
             em.flush();
             em.clear();
 
-
-            List<MemberTestDTO> resultList = em.createQuery(
-                    "select new jpabasic.hellojpa.DTO.MemberTestDTO(m.username, m.age) from MemberTest m", MemberTestDTO.class)
+            List<MemberTest> result = em.createQuery("select m from MemberTest m order by m.age desc", MemberTest.class)
+                    .setFirstResult(1)
+                    .setMaxResults(10)
                     .getResultList();
-            MemberTestDTO memberTestDTO = resultList.get(0);
-            System.out.println("username = " + memberTestDTO.getUsername());
-            System.out.println("age = " + memberTestDTO.getAge());
+
+            System.out.println("result.size = " + result.size());
+            for (MemberTest member1 : result) {
+                System.out.println("member1 = " + member1);
+            }
 
 
             tx.commit();
