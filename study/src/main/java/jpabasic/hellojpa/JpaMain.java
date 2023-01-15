@@ -2,10 +2,12 @@ package jpabasic.hellojpa;
 
 
 import jpabasic.hellojpa.DTO.MemberTestDTO;
+import jpabasic.study.domain.Member;
 
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 public class JpaMain {
 
@@ -19,49 +21,84 @@ public class JpaMain {
 
         try{
 
-            Team team = new Team();
-            team.setName("team1");
-            em.persist(team);
+            // 예시 저장
+            Team teamA = new Team();
+            teamA.setName("teamA");
+            em.persist(teamA);
 
-            MemberTest member = new MemberTest();
-            member.setUsername("관리자");
-            member.changeTeam(team);
-//            member.setAge(10);
-//            member.setType(MemberType.ADMIN);
-            em.persist(member);
+            Team teamB = new Team();
+            teamB.setName("teamB");
+            em.persist(teamB);
+
+            MemberTest member1 = new MemberTest();
+            member1.setUsername("회원1");
+            member1.changeTeam(teamA);
+            em.persist(member1);
+
+            MemberTest member2 = new MemberTest();
+            member2.setUsername("회원2");
+            member2.changeTeam(teamA);
+            em.persist(member2);
+
+            MemberTest member3 = new MemberTest();
+            member3.setUsername("회원3");
+            member3.changeTeam(teamB);
+            em.persist(member3);
+
+            MemberTest member4 = new MemberTest();
+            member4.setUsername("회원4");
+            em.persist(member4);
 
             em.flush();
             em.clear();
 
+            // ==예시 저장 완료==
 
-            /**
-             * 상태 필드
-             */
-            String query1 = "select m.username from MemberTest m";
-
-            List<String> result1 = em.createQuery(query1, String.class)
+            // 기존 join 사용해보기
+            String query1 = "select m From MemberTest m";
+            List<MemberTest> result = em.createQuery(query1, MemberTest.class)
                     .getResultList();
 
-            System.out.println("상태필드 조회: \n username = " + result1);
+            result.stream()
+                    .map(m -> Optional.ofNullable(m.getTeam()))
+                    .filter(r -> r.isPresent())
+                    .map(r -> r.get())
+                    .forEach(System.out::println);
 
-            /**
-             * 단일 값 연관 경로
-             */
-            String query2 = "select m.team from MemberTest m";
-            List<Team> result2 = em.createQuery(query2, Team.class)
-                    .getResultList();
-            System.out.println("단일 값 연관 경로: ");
+            System.out.println("==========================");
 
-            for (Team team1 : result2) {
-                System.out.println("team1 = " + team1.toString());
-            }
+            // fetch join 사용해보기
+            String query2 = "select m from MemberTest m join fetch m.team";
 
-            /**
-             * 컬렉션 값 연관 경로
-             */
-            String query3 = "select t.members from Team t";
-            List<Collection> result3 = em.createQuery(query3, Collection.class).getResultList();
-            System.out.println("컬렉션 값 연관 경로: \n members = " + result3);
+            List<MemberTest> result2 = em.createQuery(query2, MemberTest.class).getResultList();
+
+            result2.stream()
+                    .map(m -> Optional.ofNullable(m.getTeam()))
+                    .filter(r -> r.isPresent())
+                    .map(r -> r.get())
+                    .forEach(System.out::println);
+
+            System.out.println("==========================");
+
+            // 컬렉션 페치 조인 사용해보기
+            String query3 = "select t from Team t join fetch t.members";
+
+            List<Team> result3 = em.createQuery(query3, Team.class).getResultList();
+
+            result3.stream()
+                    .forEach(x -> System.out.println(x.getName() + " | members.size = " + x.getMembers().size()));
+
+
+            System.out.println("==========================");
+
+            // DISTINCT로 중복 제거하기
+            String query4 = "select distinct t from Team t join fetch t.members";
+
+            List<Team> result4 = em.createQuery(query4, Team.class).getResultList();
+
+            System.out.println("쿼리에 DISTINCT 추가: " + result4.size());
+
+
 
 
             tx.commit();
