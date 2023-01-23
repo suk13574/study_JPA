@@ -54,52 +54,37 @@ public class JpaMain {
 
             // ==예시 저장 완료==
 
-            // 기존 join 사용해보기
-            String query1 = "select m From MemberTest m";
-            List<MemberTest> result = em.createQuery(query1, MemberTest.class)
+            /**
+             * 일대다(컬렉션) 페치조인 후 페이징 사용
+             * 관련된 데이터 모두 메모리에 옮기고 페이징
+             */
+//            String query = "select t From Team t join fetch t.members m";
+//
+//            List<Team> result = em.createQuery(query, Team.class)
+//                    .setFirstResult(0)
+//                    .setMaxResults(1)
+//                    .getResultList();
+//
+//            System.out.println("result.size() = " + result.size());
+//
+//            em.clear();
+
+            // 해결방법 -
+            String query2 = "select t From Team t";
+
+            List<Team> result2 = em.createQuery(query2, Team.class)
+                    .setFirstResult(0)
+                    .setMaxResults(2)
                     .getResultList();
 
-            result.stream()
-                    .map(m -> Optional.ofNullable(m.getTeam()))
-                    .filter(r -> r.isPresent())
-                    .map(r -> r.get())
-                    .forEach(System.out::println);
+            System.out.println("result.size() = " + result2.size());
 
-            System.out.println("==========================");
-
-            // fetch join 사용해보기
-            String query2 = "select m from MemberTest m join fetch m.team";
-
-            List<MemberTest> result2 = em.createQuery(query2, MemberTest.class).getResultList();
-
-            result2.stream()
-                    .map(m -> Optional.ofNullable(m.getTeam()))
-                    .filter(r -> r.isPresent())
-                    .map(r -> r.get())
-                    .forEach(System.out::println);
-
-            System.out.println("==========================");
-
-            // 컬렉션 페치 조인 사용해보기
-            String query3 = "select t from Team t join fetch t.members";
-
-            List<Team> result3 = em.createQuery(query3, Team.class).getResultList();
-
-            result3.stream()
-                    .forEach(x -> System.out.println(x.getName() + " | members.size = " + x.getMembers().size()));
-
-
-            System.out.println("==========================");
-
-            // DISTINCT로 중복 제거하기
-            String query4 = "select distinct t from Team t join fetch t.members";
-
-            List<Team> result4 = em.createQuery(query4, Team.class).getResultList();
-
-            System.out.println("쿼리에 DISTINCT 추가: " + result4.size());
-
-
-
+            for (Team team : result2) {
+                System.out.println("team = " + team.getName() + " | members = " + team.getMembers().size());
+                for (MemberTest member : team.getMembers()) {
+                    System.out.println(" -> member = " + member);
+                }
+            }
 
             tx.commit();
         } catch (Exception e){
