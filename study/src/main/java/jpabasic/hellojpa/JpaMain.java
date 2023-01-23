@@ -49,22 +49,34 @@ public class JpaMain {
             member4.setUsername("회원4");
             em.persist(member4);
 
-            em.flush();
-            em.clear();
+//            em.flush();
+//            em.clear();
 
             // ==예시 저장 완료==
 
             /**
-             * 네임드 쿼리 사용
+             * 벌크 연산
              */
 
-            List<MemberTest> resultList = em.createNamedQuery("MemberTest.findByUsername", MemberTest.class)
-                    .setParameter("username", "회원1")
-                    .getResultList();
+            //flush 자동 호출
+            int resultCount = em.createQuery("update MemberTest m set m.age=20")
+                    .executeUpdate();
 
-            for (MemberTest memberTest : resultList) {
-                System.out.println("member = " + memberTest);
-            }
+            System.out.println("resultCount = " + resultCount);
+
+            //DB에는 나이 20, 하지만 영속성 컨텍스트에는 반영되지 않으므로 0으로 나옴
+            System.out.println("member1.getAge(): " + member1.getAge());
+            System.out.println("member2.getAge(): " + member2.getAge());
+            System.out.println("member3.getAge(): " + member3.getAge());
+            System.out.println("member4.getAge(): " + member4.getAge());
+
+            /**
+             * 벌크 연산 후 영속성 컨텍스트 비우기
+             */
+            em.clear();
+
+            MemberTest findMember1 = em.find(MemberTest.class, member1.getId());
+            System.out.println("findMember1.getAge() : " + findMember1.getAge());
 
             tx.commit();
         } catch (Exception e){
