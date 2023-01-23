@@ -9,6 +9,10 @@ import java.util.*;
 
 @Entity
 @Getter @Setter
+@NamedQuery(
+        name = "MemberTest.findByUsername",
+        query = "select m from MemberTest m where m.username = :username"
+)
 public class MemberTest {
     @Id @GeneratedValue
     @Column(name = "MEMBER_ID")

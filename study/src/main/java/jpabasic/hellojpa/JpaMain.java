@@ -55,35 +55,15 @@ public class JpaMain {
             // ==예시 저장 완료==
 
             /**
-             * 일대다(컬렉션) 페치조인 후 페이징 사용
-             * 관련된 데이터 모두 메모리에 옮기고 페이징
+             * 네임드 쿼리 사용
              */
-//            String query = "select t From Team t join fetch t.members m";
-//
-//            List<Team> result = em.createQuery(query, Team.class)
-//                    .setFirstResult(0)
-//                    .setMaxResults(1)
-//                    .getResultList();
-//
-//            System.out.println("result.size() = " + result.size());
-//
-//            em.clear();
 
-            // 해결방법 -
-            String query2 = "select t From Team t";
-
-            List<Team> result2 = em.createQuery(query2, Team.class)
-                    .setFirstResult(0)
-                    .setMaxResults(2)
+            List<MemberTest> resultList = em.createNamedQuery("MemberTest.findByUsername", MemberTest.class)
+                    .setParameter("username", "회원1")
                     .getResultList();
 
-            System.out.println("result.size() = " + result2.size());
-
-            for (Team team : result2) {
-                System.out.println("team = " + team.getName() + " | members = " + team.getMembers().size());
-                for (MemberTest member : team.getMembers()) {
-                    System.out.println(" -> member = " + member);
-                }
+            for (MemberTest memberTest : resultList) {
+                System.out.println("member = " + memberTest);
             }
 
             tx.commit();
